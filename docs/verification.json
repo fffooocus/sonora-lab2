@@ -1,0 +1,32 @@
+{
+  "environment": "Playwright Chromium (local Microsoft Edge when available)",
+  "checksPassed": 24,
+  "checks": [
+    "Default dataset automatically creates 24 notes",
+    "Default indicators are temperature and precipitation",
+    "Web Audio starts and timeline advances",
+    "Pause preserves position",
+    "Stop resets timeline",
+    "Seek updates the current time",
+    "Tempo updates duration and resets playback",
+    "Downloaded MIDI reflects instrument, tempo and note count",
+    "Mapping indicators stay distinct",
+    "Alternative demo switches data and composition",
+    "Invalid CSV reports error and preserves previous composition",
+    "CSV upload accepts Ukrainian headings and decimal commas",
+    "CSV editor automatically regenerates MIDI",
+    "Invalid editor data stays editable with diagnostic",
+    "CSV labels render as text without HTML execution",
+    "Oversize CSV is rejected before processing",
+    "Algorithm page opens with formulas",
+    "Submission page includes student details",
+    "Responsive layout has no page overflow at 390px",
+    "Responsive layout has no page overflow at 768px",
+    "Responsive layout has no page overflow at 1440px",
+    "Space shortcut starts playback",
+    "Escape shortcut stops playback",
+    "No browser JavaScript errors"
+  ],
+  "errors": [],
+  "note": "Automated functional checks; acoustic fidelity and external DAW playback are not certified."
+}

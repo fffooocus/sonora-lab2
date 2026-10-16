@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#131615">
+  <meta name="description" content="SONORA — перетворюйте числові дані на музику. Імпорт CSV, інтерактивна візуалізація, прослуховування та експорт MIDI.">
+  <title>SONORA — почуйте свої дані</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5C8 2 3 4 3 4v15s5-2 9 1c4-3 9-1 9-1V4s-5-2-9 1v15"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M13 3H5v18h14V9l-6-6Zm0 0v6h6M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 4v16M16 4v16"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5V4Zm5 4c3 2 3 6 0 8m3-11c5 4 5 10 0 14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/></symbol>
+  </defs></svg>
+  <a class="skip-link" href="#main">Перейти до вмісту</a>
+  <aside class="sidebar">
+    <a class="brand" href="#studio" aria-label="SONORA, студія"><span class="brand-mark"><i></i><i></i><i></i><i></i><i></i></span>sonora<span class="brand-dot">.</span></a>
+    <div class="sidebar-caption">DATA SONIFICATION STUDIO</div>
+    <nav aria-label="Головна навігація">
+      <a href="#studio" data-view="studio" class="nav-link active"><svg><use href="#i-grid"/></svg>Студія<span>01</span></a>
+      <a href="#guide" data-view="guide" class="nav-link"><svg><use href="#i-book"/></svg>Як це працює<span>02</span></a>
+      <a href="#report" data-view="report" class="nav-link"><svg><use href="#i-file"/></svg>Матеріали роботи<span>03</span></a>
+    </nav>
+    <div class="sidebar-note"><span class="tiny-label">МЕНШЕ ЦИФР. БІЛЬШЕ ВІДЧУТТІВ.</span><p>Кожен набір даних<br>має власне звучання.</p><div class="mini-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Працює локально у браузері<span class="version">v1.0 · Лабораторна №2</span></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><div><span class="breadcrumb">Робочий простір</span><span class="slash">/</span><span id="page-title">Студія</span></div><span class="lab-badge">ЛАБОРАТОРНА 02 <span>ВАРІАНТ 2</span></span></header>
+    <main id="main">
+      <section id="view-studio" class="view">
+        <div class="hero"><div><div class="eyebrow"><span></span> ВІД ЧИСЕЛ ДО МУЗИКИ</div><h1>Почуйте, як<br>звучать <em>дані.</em></h1><p>Перетворіть звичайну таблицю на власну композицію.<br class="desktop-break"> Завантажте CSV, налаштуйте звучання та збережіть MIDI.</p></div><div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="art-label">SIGNAL → SOUND</div><div class="hero-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="art-bottom">48–84 <span>MIDI NOTE RANGE</span></div></div></div>
+        <div class="workflow"><span><b>01</b> Додайте дані</span><svg><use href="#i-arrow"/></svg><span><b>02</b> Оберіть звучання</span><svg><use href="#i-arrow"/></svg><span><b>03</b> Почуйте результат</span><span class="workflow-end">CSV <span>→</span> MIDI</span></div>
+        <div class="workspace-grid">
+          <section class="panel data-panel" aria-labelledby="data-heading">
+            <div class="panel-heading"><h2 id="data-heading"><span class="section-number">01</span>Джерело даних</h2><span class="tag">CSV</span></div>
+            <button id="upload-zone" class="upload-zone" type="button"><span class="upload-icon"><svg><use href="#i-upload"/></svg></span><strong>Перетягніть CSV сюди</strong><span>або натисніть, щоб обрати файл</span><small>До 1 МБ · 2–512 рядків · від 2 числових показників</small></button>
+            <input id="file-input" type="file" accept=".csv,text/csv,text/tab-separated-values" hidden>
+            <div class="demo-row"><span>Або спробуйте приклад</span><div class="segmented" aria-label="Демонстраційні дані"><button id="demo-weather" class="selected" type="button">Погода</button><button id="demo-energy" type="button">Енергія</button></div></div>
+            <div class="dataset-info"><span class="dataset-icon"><svg><use href="#i-file"/></svg></span><div><strong id="dataset-name">kyiv-weather.csv</strong><span id="dataset-description">Навчальні синтетичні дані</span></div><span class="ready-check" title="Дані перевірено"><svg><use href="#i-check"/></svg></span></div>
+            <div id="data-error" class="error-box" role="alert" hidden></div>
+            <div class="table-scroll"><table id="data-table"><caption class="sr-only">Попередній перегляд вхідних даних</caption><thead></thead><tbody></tbody></table></div>
+            <div class="table-footer"><span id="row-count"></span><button id="edit-data" class="text-button" type="button">Редагувати CSV <span>↗</span></button></div>
+          </section>
+          <section class="panel mapping-panel" aria-labelledby="mapping-heading">
+            <div class="panel-heading"><h2 id="mapping-heading"><span class="section-number">02</span>Налаштування звуку</h2><svg class="muted-icon"><use href="#i-sliders"/></svg></div>
+            <div class="mapping-field"><label for="pitch-column"><span class="mapping-dot mint"></span>Висота ноти <small>ПОКАЗНИК 1</small></label><select id="pitch-column"></select><p>Більше значення — вища нота.</p></div>
+            <div class="mapping-field"><label for="expression-column"><span class="mapping-dot amber"></span>Сила та тривалість <small>ПОКАЗНИК 2</small></label><select id="expression-column"></select><p>Більше значення — сильніша й довша нота.</p></div>
+            <div class="settings-row"><div><label for="scale">Музична гама</label><select id="scale"><option value="pentatonic">Пентатоніка C</option><option value="major">До мажор</option><option value="minor">Ля мінор</option><option value="chromatic">Хроматична</option></select></div><div><label for="instrument">Інструмент</label><select id="instrument"><option value="11">Вібрафон</option><option value="0">Фортепіано</option><option value="10">Музична скринька</option><option value="80">Синтезатор</option></select></div></div>
+            <div class="tempo-heading"><label for="tempo">Темп композиції</label><output id="tempo-value" for="tempo">108 <span>BPM</span></output></div><input id="tempo" type="range" min="40" max="240" value="108"><div class="range-labels"><span>40 · повільно</span><span>240 · швидко</span></div>
+            <div class="mapping-note"><span>↳</span> Один рядок = одна нота. Композиція оновлюється автоматично.</div>
+          </section>
+        </div>
+        <section class="panel composition-panel" aria-labelledby="composition-heading"><div class="composition-top"><div><div class="eyebrow">03 / ВАША КОМПОЗИЦІЯ</div><h2 id="composition-heading">Дані, що стали музикою</h2></div><button id="download-midi" class="primary-button" type="button"><svg><use href="#i-download"/></svg>Завантажити MIDI</button></div>
+          <div class="composition-stats"><span><i class="status-dot"></i> <b id="note-count">24</b> ноти</span><span><b id="duration-stat">00:13</b> тривалість</span><span><b>2</b> MIDI-доріжки</span><span class="midi-format">SMF TYPE 1 · 480 PPQ</span></div>
+          <div class="visualization-heading"><span><i class="mapping-dot mint"></i>Висота <span class="legend-divider">/</span><i class="mapping-dot amber"></i>Сила ноти</span><span>PIANO ROLL</span></div>
+          <div class="piano-wrap"><canvas id="piano-roll" aria-label="Піанороль: положення ноти показує її висоту, довжина — тривалість, колір — силу" role="img"></canvas></div>
+          <div class="transport"><div class="transport-buttons"><button id="play" class="play-button" type="button" aria-label="Відтворити"><svg><use href="#i-play"/></svg></button><button id="stop" class="icon-button" type="button" aria-label="Зупинити"><svg><use href="#i-stop"/></svg></button></div><span id="current-time" class="time-label">00:00</span><label class="sr-only" for="seek">Позиція відтворення</label><input id="seek" type="range" min="0" max="1000" value="0"><span id="total-time" class="time-label">00:13</span><div class="volume-control"><svg><use href="#i-volume"/></svg><label class="sr-only" for="volume">Гучність</label><input id="volume" type="range" min="0" max="100" value="55"></div></div>
+          <div class="composition-footer"><span id="playback-status" role="status">Композиція готова до прослуховування</span><span>Синтезований попередній перегляд · тембр MIDI залежить від плеєра</span></div>
+        </section>
+        <div class="bottom-note"><span>Створено для дослідження зв’язку між даними та звуком.</span><a href="#guide">Дізнатись про алгоритм <span>↗</span></a></div>
+      </section>
+      <section id="view-guide" class="view prose-view" hidden><div class="eyebrow">ВІД ДАНИХ ДО MIDI</div><h1>Як це <em>працює.</em></h1><p class="lead">Соніфікація — це передавання інформації за допомогою звуку. SONORA перетворює кожен рядок таблиці на одну музичну ноту.</p><div class="guide-grid"><article class="panel guide-card"><span class="section-number">01</span><h2>Нормалізація</h2><p>Кожен показник окремо приводиться до діапазону 0–1 за мінімумом і максимумом у завантаженому наборі.</p><code>u = (x − min) / (max − min)</code><p>Якщо всі значення однакові, u = 0,5. Від’ємні значення підтримуються.</p></article><article class="panel guide-card"><span class="section-number">02</span><h2>Висота ноти</h2><p>Перший показник обирає ноту з обраної гами. Мінімум відповідає найнижчій ноті, максимум — найвищій.</p><code>index = round(u × (N − 1))</code><p>Типова пентатоніка: C3, D3, E3, G3, A3 … A5.</p></article><article class="panel guide-card"><span class="section-number">03</span><h2>Сила та тривалість</h2><p>Другий показник керує velocity (силою натискання) та тривалістю. Сильніші значення звучать довше.</p><code>velocity = round(40 + 75 × v)<br>ticks = round(480 × (0,35 + 0,55 × v))</code><p>Velocity: 40–115. Тривалість: 168–432 ticks.</p></article><article class="panel guide-card"><span class="section-number">04</span><h2>Час і MIDI-файл</h2><p>Нова нота починається щочверті: tick = номер рядка × 480. Темп 40–240 BPM задає швидкість.</p><code>seconds = rows × 60 / BPM</code><p>SMF Type 1: доріжка темпу й розміру 4/4 та мелодична доріжка з Program Change, Note On / Note Off.</p></article></div><article class="panel guide-card"><h2>Підготуйте свій CSV</h2><p>Перший рядок — унікальні заголовки. Далі від 2 до 512 рядків, щонайменше два числові стовпці без пропусків. Роздільники: кома, крапка з комою або табуляція; десяткова кома підтримується з «;» та табуляцією. Часовий стовпець необов’язковий: зберігається порядок рядків, часові проміжки не інтерпретуються.</p><pre>day,temperature,precipitation
+01,12,0
+02,18,5
+03,24,10</pre><p>Мінімальний рядок дає C3, velocity 40, 168 ticks; максимальний — A5, velocity 115, 432 ticks. При темпі 120 BPM один рядок займає 0,5 с. Нормалізація відносна до поточного набору, тому та сама температура в різних CSV може дати різну ноту.</p><a class="text-button" href="./examples/semicolon.csv" download>Завантажити CSV з десятковою комою ↗</a></article><article class="panel guide-card"><h2>Що саме ви чуєте</h2><p>Браузер відтворює ноти через Web Audio API. Це простий синтезатор для перевірки мелодії, ритму й динаміки. MIDI-файл містить General MIDI Program Change; точний тембр фортепіано чи вібрафона відтворить зовнішній плеєр зі звуковим банком.</p><p>Усі CSV обробляються локально. Вміст не надсилається на сервер і не зберігається після перезавантаження. Скорочення: <kbd>Пробіл</kbd> — Play/Pause, <kbd>Esc</kbd> — Stop. У полях введення та діалогах скорочення не перехоплюються.</p></article></section>
+      <section id="view-report" class="view prose-view" hidden><div class="eyebrow">ЛАБОРАТОРНА РОБОТА №2 · ВАРІАНТ 2</div><h1>Готово до <em>захисту.</em></h1><p class="lead">Розробка мультимедійного застосунку з використанням сучасних технологій. Соніфікація числових даних у MIDI-композицію.</p><div class="author-card panel"><span class="section-number">ВИКОНАВ</span><h2>Левківський Євгеній Сергійович</h2><span class="tag">ІПС-41</span></div><div class="guide-grid"><article class="panel guide-card"><h2>Звіт до лабораторної</h2><p>Мета, вимоги, архітектура, формули перетворення, приклад розрахунку, перевірки, скриншоти та висновки.</p><div class="download-links"><a class="primary-button" href="./docs/report.pdf" download><svg><use href="#i-download"/></svg>Звіт PDF</a><a class="secondary-button" href="./docs/report.docx" download>DOCX</a></div></article><article class="panel guide-card"><h2>Сценарій демонстрації</h2><p>Коротка послідовність показу функціоналу та відповіді на запитання про MIDI й нормалізацію.</p><a class="secondary-button" href="./docs/DEFENSE.md" download>План захисту ↗</a></article><article class="panel guide-card"><h2>Вхідні та вихідні дані</h2><p>Синтетичні навчальні набори: погода та енергоспоживання. Готовий MIDI з типовими параметрами.</p><div class="download-links"><a class="secondary-button" href="./examples/kyiv-weather.csv" download>CSV · погода</a><a class="secondary-button" href="./examples/sonora-weather.mid" download>MIDI · приклад</a></div></article><article class="panel guide-card"><h2>Відповідність завданню</h2><p>Два числові показники → три параметри MIDI. Автоматичне формування .mid. Правила перетворення пояснено в застосунку та звіті. Додатково: імпорт CSV, піанороль, прослуховування, вибір гами й інструмента.</p><a class="text-button" href="#studio">Повернутись у студію ↗</a></article></div></section>
+    </main><footer>SONORA<span>Левківський Євгеній Сергійович · ІПС-41 · 2026</span><span>Числа мають голос.</span></footer>
+  </div>
+  <dialog id="csv-dialog"><form method="dialog"><div class="panel-heading"><h2>Редагувати дані</h2><button class="icon-button close-dialog" aria-label="Закрити" value="cancel">×</button></div><label for="csv-editor">CSV із заголовками та двома числовими показниками</label><textarea id="csv-editor" spellcheck="false" rows="13"></textarea><div id="editor-error" class="error-box" role="alert" hidden></div><div class="dialog-footer"><button class="secondary-button" value="cancel">Скасувати</button><button id="apply-csv" type="button" class="primary-button">Застосувати дані <svg><use href="#i-arrow"/></svg></button></div></form></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

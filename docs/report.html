@@ -1,0 +1,88 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Звіт — SONORA · Лабораторна №2 · ІПС-41</title><style>
+@page{size:A4;margin:20mm 20mm 22mm}*{box-sizing:border-box}body{font:14pt/1.5 'Times New Roman',serif;color:#151515;margin:0}a{color:inherit}h2{font-size:16pt;margin:22pt 0 10pt;break-after:avoid}h3{font-size:14pt;margin:16pt 0 8pt;break-after:avoid}p{text-align:justify;margin:0 0 10pt;orphans:3;widows:3}table{border-collapse:collapse;width:100%;font-size:10.5pt;line-height:1.35;margin:12pt 0;table-layout:fixed;break-inside:auto}tr{break-inside:avoid}th,td{border:1px solid #aaa;padding:7pt;overflow-wrap:anywhere;vertical-align:top}th{background:#edf0eb;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f2ed;padding:12pt;font:11pt/1.5 Consolas,monospace;break-inside:avoid}figure{margin:20pt 0;break-inside:avoid}figure img{display:block;width:100%;max-height:205mm;object-fit:contain}figcaption{text-align:center;font-size:11pt;line-height:1.4;margin-top:8pt}.title{height:252mm;display:flex;flex-direction:column;align-items:center;text-align:center;break-after:page;padding-top:40mm}.title h1{font-size:24pt;line-height:1.4;margin:14mm 0 7mm}.title .topic{font-size:16pt;max-width:145mm;line-height:1.6}.title .author{text-align:left;align-self:flex-end;font-size:14pt;line-height:1.8;margin-top:28mm}.title .year{margin-top:auto;padding-bottom:5mm}.title .variant{margin-top:8mm;font-size:15pt}.title .name{font-size:30pt;letter-spacing:4pt;color:#354b39}
+</style></head><body><section class="title"><div class="name">SONORA</div><h1>ЛАБОРАТОРНА РОБОТА №2</h1><div class="topic">Розробка мультимедійного застосунку<br>з використанням сучасних технологій</div><div class="variant">Варіант 2. Соніфікація даних</div><div class="author">Виконав:<br>Левківський Євгеній Сергійович<br>Група ІПС-41</div><div class="year">2026</div></section><h2>1. Мета роботи</h2>
+<p>Розробити мультимедійний застосунок із використанням сучасних вебтехнологій, що перетворює числові дані на MIDI-композицію. Реалізувати правила впливу принаймні двох числових показників на параметри MIDI, автоматичне формування файлу та засоби демонстрації результату.</p>
+<p>Обрано варіант 2 — «Соніфікація даних». Назва застосунку — SONORA. Мова програмування — JavaScript, інтерфейс — HTML5 та CSS3, синтез звуку — Web Audio API. Застосунок працює у браузері, що дозволено умовами цього варіанта; вимога desktop стосується варіанта 1.</p>
+<h2>2. Постановка задачі та відповідність вимогам</h2>
+<table><tr><th>Вимога</th><th>Реалізація у SONORA</th></tr><tr><td>Вхідні дані містять щонайменше два числові показники</td><td>Імпорт CSV, перевірка числових стовпців, вибір двох різних показників</td></tr><tr><td>Кожен показник впливає хоча б на один параметр MIDI</td><td>Перший → висота; другий → velocity і тривалість</td></tr><tr><td>Автоматичне формування MIDI-файлу</td><td>Після імпорту та змін налаштувань створюється модель композиції; завантажується готовий SMF Type 1</td></tr><tr><td>Пояснення перетворення у звіті</td><td>Нормалізація, формули, гами та приклад обчислення в розділі 5</td></tr><tr><td>Якість і структура коду</td><td>Розділення CSV, соніфікації, запису MIDI, звуку та UI; автоматизовані перевірки</td></tr><tr><td>Додаткові можливості</td><td>Піанороль, програвання, редагування CSV, вибір темпу, гами та інструмента, адаптивність</td></tr></table>
+<p>Пункти охоплюють функціональну частину завдання та додаткові можливості. Остаточну оцінку визначає викладач.</p>
+<h2>3. Обрані технології та архітектура</h2>
+<p>Браузерний застосунок використовує ES-модулі без фреймворків та сторонніх runtime-бібліотек. Власні CSV-парсер і MIDI-кодувальник дають можливість явно показати алгоритми перевірки та перетворення. Для локального HTTP-сервера й допоміжних команд потрібен Node.js 22+.</p>
+<p>Потік обробки: CSV → перевірена таблиця → нормалізація двох показників → список нот → синтез і візуалізація → MIDI-файл. Інтерфейс не виконує формули з клітинок; імпортовані назви виводяться через textContent. Дані не надсилаються на сервер і зберігаються лише в оперативній пам’яті поточної сторінки.</p>
+<table><tr><th>Модуль</th><th>Відповідальність</th></tr><tr><td>web/lib/csv.js</td><td>Визначення роздільника, читання лапок, перевірка таблиці й числових стовпців</td></tr><tr><td>web/lib/sonify.js</td><td>Нормалізація, вибір гами, обчислення pitch, velocity, duration і часу</td></tr><tr><td>web/lib/midi.js</td><td>Заголовок SMF, VLQ, метаподії, дві доріжки та запис байтів</td></tr><tr><td>web/lib/audio.js</td><td>Web Audio, планування нот, Play/Pause, Stop, позиція та гучність</td></tr><tr><td>web/app.js</td><td>Події інтерфейсу, імпорт, піанороль, навігація та скачування</td></tr><tr><td>scripts/</td><td>Локальний сервер, збирання, перевірки, формування звітів і архіву</td></tr></table>
+<p>Додаткові npm-пакети використовуються для розробки: midi-file — незалежне читання експорту в тестах; Playwright — браузерна перевірка й друк PDF; docx — оформлення документа Word. Вони не завантажуються користувачем сайту.</p>
+<h2>4. Вхідні дані та перевірка</h2>
+<p>Перший рядок CSV містить унікальні непорожні заголовки. Далі допускається від 2 до 512 рядків, до 32 стовпців і 1 МБ тексту. Повністю числовими вважаються стовпці, де кожне значення є скінченним числом. Підтримуються від’ємні числа, дробові числа та науковий запис. NaN, Infinity, порожні клітинки і суфікси на зразок 12abc не є числами.</p>
+<p>Роздільник визначається за заголовком поза лапками: кома, крапка з комою або табуляція. Підтримуються UTF-8 BOM, CRLF, коми та переноси рядків усередині подвійних лапок, екранування лапок через їх подвоєння. Для десяткової коми потрібен роздільник «;» або табуляція. Некоректний імпорт показує повідомлення й залишає попередній робочий набір.</p>
+<p>Готові набори kyiv-weather.csv та energy.csv є синтетичними навчальними прикладами, а не фактичними вимірюваннями. Перший містить 24 рядки з temperature та precipitation, другий — 16 рядків з consumption та solar. Додатковий semicolon.csv демонструє українські заголовки й десяткову кому. Текстові day/hour збережено як підписи; порядок рядків визначає порядок нот.</p>
+<h2>5. Правила перетворення даних у звук</h2>
+<h3>5.1. Нормалізація</h3>
+<p>Кожен із двох показників нормалізується окремо за мінімальним і максимальним значеннями в поточному наборі. Для першого показника результат позначено u, для другого — v.</p>
+<pre>u = (x − xmin) / (xmax − xmin)
+v = (y − ymin) / (ymax − ymin)</pre>
+<p>Значення належать діапазону [0; 1]. Якщо максимум дорівнює мінімуму, використовується 0,5, щоб уникнути ділення на нуль. Реалізація попередньо масштабує числа за їх найбільшим модулем, щоб різниця дуже великих скінченних значень не переповнювала числовий тип. Нормалізація є відносною: однакове вихідне число може відповідати різним нотам у різних наборах.</p>
+<h3>5.2. Перший показник → висота ноти</h3>
+<p>Нормалізоване u вибирає індекс у впорядкованому масиві нот обраної гами. Для N нот індекс обчислюється як round(u × (N − 1)). Типова пентатоніка до мажору містить 15 нот:</p>
+<pre>[48, 50, 52, 55, 57, 60, 62, 64,
+ 67, 69, 72, 74, 76, 79, 81]</pre>
+<p>Нумерація використовує MIDI middle C = 60 (C4). Отже, мінімальне значення дає C3 (48), максимальне — A5 (81). Доступні також до мажор, ля мінор і хроматична гама. Квантування до гами забезпечує передбачувану музичну структуру, хоча близькі числа можуть потрапити в одну ноту.</p>
+<h3>5.3. Другий показник → velocity і тривалість</h3>
+<pre>velocity = round(40 + 75 × v)
+durationTicks = round(480 × (0,35 + 0,55 × v))</pre>
+<p>Сила натискання змінюється від 40 до 115, що входить у діапазон звучної MIDI Note On. Тривалість — від 168 до 432 ticks, тобто 0,35–0,90 чверті. Більше значення другого показника утворює сильнішу й довшу ноту. Оскільки тривалість менша за крок 480 ticks, ноти не перекриваються, зокрема при повторенні висоти.</p>
+<h3>5.4. Часова сітка та інструмент</h3>
+<p>Один рядок відповідає одній чверті. Початок ноти i, де i рахується від нуля: startTick = i × 480. Note Off записується на startTick + durationTicks. Для R рядків та темпу B тривалість композиції становить R × 60 / B секунд, включно з паузою наприкінці останньої чверті. Реальні проміжки між часовими мітками CSV не обчислюються.</p>
+<p>Темп налаштовується від 40 до 240 BPM. Інструмент задає MIDI Program Change: 0 — Acoustic Grand Piano, 10 — Music Box, 11 — Vibraphone, 80 — Lead 1 (square). Це нумерація від нуля, яка записується у файл; у деяких редакторах інструменти відображаються від 1.</p>
+<h3>5.5. Контрольний приклад</h3>
+<p>Вхідна таблиця: x = [0; 5; 10], y = [0; 5; 10]. Пентатоніка C, темп 120 BPM. Для обох стовпців нормалізовані значення — [0; 0,5; 1].</p>
+<table><tr><th>Рядок</th><th>u / v</th><th>MIDI note</th><th>Velocity</th><th>Duration, ticks</th><th>Початок, ticks</th></tr><tr><td>1</td><td>0 / 0</td><td>48, C3</td><td>40</td><td>168</td><td>0</td></tr><tr><td>2</td><td>0,5 / 0,5</td><td>64, E4</td><td>78</td><td>300</td><td>480</td></tr><tr><td>3</td><td>1 / 1</td><td>81, A5</td><td>115</td><td>432</td><td>960</td></tr></table>
+<p>Загальна тривалість — 3 × 60 / 120 = 1,5 с. Друга нота звучить 300 / 480 × 0,5 = 0,3125 с. Ці значення перевіряються автоматизованим тестом; окремий незалежний MIDI-парсер перевіряє їх після серіалізації у файл.</p>
+<h2>6. Формування Standard MIDI File</h2>
+<p>Використано SMF Type 1 із двома синхронними доріжками та роздільною здатністю 480 PPQ. Заголовок MThd містить довжину 6, формат 1, кількість доріжок 2 та division = 480. Кожен блок MTrk має довжину даних у байтах.</p>
+<p>Доріжка 1 містить назву, Set Tempo (мікросекунди на чверть, round(60 000 000 / BPM)), Time Signature 4/4 і End of Track. Доріжка 2 містить назву, Program Change на MIDI-каналі 1 (індекс 0), пари Note On/Note Off та End of Track. Друга доріжка є одноголосною мелодією; дві доріжки не означають два одночасні музичні голоси.</p>
+<p>Події сортуються за абсолютним tick. До файлу записується різниця між tick поточної та попередньої події — delta time у форматі VLQ. Назви MIDI-доріжок записано ASCII, числові поля заголовків — у big-endian. Завантаження виконується через Blob з MIME audio/midi та тимчасове object URL, яке після використання звільняється.</p>
+<h2>7. Інтерфейс і відтворення</h2>
+<p>Інтерфейс складається з трьох кроків: джерело даних, налаштування та результат. Таблиця показує вхідні значення, а колір виділяє показники, що відповідають pitch та expression. На піаноролі вертикальна координата відображає висоту, довжина прямокутника — тривалість, колір — другий показник. Під час відтворення рухається курсор.</p>
+<p>Web Audio API генерує осцилятори з частотою f = 440 × 2^((note − 69) / 12). Амплітуда залежить від velocity; коротка огинаюча зменшує клацання. Планувальник працює з невеликим випередженням на основі AudioContext.currentTime. Підтримуються Pause з продовженням, Stop, переміщення та локальна гучність. Зміна даних або параметрів зупиняє попередню композицію.</p>
+<p>Звук у браузері є попереднім синтезованим переглядом. Точний тембр General MIDI визначається звуковим банком зовнішнього плеєра. Керування гучністю не змінює velocity експортованих нот. При переході на іншу вкладку програвання призупиняється, щоб фонове обмеження таймерів не порушувало ритм.</p>
+<figure><img src="screenshots/studio-desktop.png" alt="Рисунок 1 — Студія: вхідна таблиця, налаштування та піанороль"><figcaption>Рисунок 1 — Студія: вхідна таблиця, налаштування та піанороль</figcaption></figure>
+<figure><img src="screenshots/algorithm.png" alt="Рисунок 2 — Пояснення алгоритму у застосунку"><figcaption>Рисунок 2 — Пояснення алгоритму у застосунку</figcaption></figure>
+<h2>8. Перевірка коректності</h2>
+<p>Модульні перевірки запускаються командою npm test. Вони охоплюють CSV з лапками, BOM, різними роздільниками, від’ємними та константними даними; помилкові рядки, NaN, переповнення, обмеження розміру; вплив обох показників; гами й інструменти; VLQ; структуру та часові події MIDI. Дані експорту читаються стороннім midi-file, а не тим самим власним кодувальником, що зменшує ризик перевірки алгоритму ним самим.</p>
+<p>Браузерна перевірка Playwright виконує реальний імпорт, Play/Pause/Stop, переміщення, зміну темпу та інструмента, завантаження і розбір MIDI, зміну показників, редагування CSV та помилки вводу. Також перевіряється відсутність виконання HTML із клітинок, обмеження 1 МБ, навігація, клавіатура, відсутність горизонтального переповнення на ширинах 390, 768 та 1440 px і помилок JavaScript.</p>
+<p>Підсумок фактичної браузерної перевірки автоматично додається до сформованих PDF/DOCX з docs/verification.json. Скриншоти отримано під час цієї перевірки. Автоматичні перевірки підтверджують події та працездатність інтерфейсу; суб’єктивна якість звуку й імпорт до зовнішньої DAW автоматично не засвідчуються.</p>
+<h2>9. Запуск, публікація та демонстрація</h2>
+<p>Онлайн: https://fffooocus.github.io/sonora-lab2/ . Вихідний код: https://github.com/fffooocus/sonora-lab2 . Локально: встановити Node.js 22+, запустити npm start і відкрити http://127.0.0.1:4173. У Windows доступний файл «Запустити SONORA.cmd». Runtime-залежності npm не потрібні; для тестів і відтворення документів спочатку виконується npm ci.</p>
+<p>Послідовність відтворення комплекту: npm test → npm run test:browser → npm run docs → npm run build → npm run release. Команда npm run publish:pages публікує готовий dist у гілку gh-pages, яку обслуговує GitHub Pages. Перевірки виконуються до публікації локально. Окремо додано необов’язковий шаблон GitHub Actions; він не активований, оскільки поточний GitHub-токен не має scope workflow. Обрано статичний хостинг, оскільки серверна обробка даних не потрібна.</p>
+<p>Для захисту слід показати два числові показники, пояснити їхній вплив, прослухати результат, змінити темп і гаму, імпортувати інший CSV та завантажити MIDI. Повний сценарій і короткі відповіді наведено в docs/DEFENSE.md. Готовий examples/sonora-weather.mid дозволяє продемонструвати результат без попереднього імпорту.</p>
+<h2>10. Висновки</h2>
+<p>Розроблено мультимедійний застосунок SONORA для соніфікації табличних даних. Два незалежні числові показники керують трьома параметрами MIDI: висотою, силою та тривалістю ноти. Реалізовано власне формування SMF Type 1, автоматичне оновлення композиції, локальну обробку CSV, візуалізацію та звуковий попередній перегляд. Правила перетворення є явними, відтворюваними та перевіреними тестами.</p>
+<p>Практичний результат — застосунок, вихідний код, навчальні CSV, зразок MIDI, звіт і сценарій демонстрації. Подальші розширення можуть включати декілька мелодичних голосів, абсолютні шкали показників та синтезатор зі звуковим банком.</p>
+<h2>Використані джерела</h2>
+<p>1. MIDI Association. Standard MIDI Files. https://midi.org/standard-midi-files 2. MDN Web Docs. Web Audio API. https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API 3. MDN Web Docs. File API. https://developer.mozilla.org/en-US/docs/Web/API/File_API 4. midi-file — MIDI parser and writer. https://github.com/carter-thaxton/midi-file 5. Playwright. Documentation. https://playwright.dev/docs/intro 6. GitHub Docs. Creating a GitHub Pages site. https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site</p>
+<h2>Додаток. Протокол автоматизованої перевірки</h2>
+<p>Середовище: Playwright Chromium (local Microsoft Edge when available). Успішних браузерних перевірок: 24; помилок JavaScript: 0. Модульні перевірки виконуються окремо командою npm test. Нижче наведено сценарії з фактичного протоколу.</p>
+<p>✓ Default dataset automatically creates 24 notes</p>
+<p>✓ Default indicators are temperature and precipitation</p>
+<p>✓ Web Audio starts and timeline advances</p>
+<p>✓ Pause preserves position</p>
+<p>✓ Stop resets timeline</p>
+<p>✓ Seek updates the current time</p>
+<p>✓ Tempo updates duration and resets playback</p>
+<p>✓ Downloaded MIDI reflects instrument, tempo and note count</p>
+<p>✓ Mapping indicators stay distinct</p>
+<p>✓ Alternative demo switches data and composition</p>
+<p>✓ Invalid CSV reports error and preserves previous composition</p>
+<p>✓ CSV upload accepts Ukrainian headings and decimal commas</p>
+<p>✓ CSV editor automatically regenerates MIDI</p>
+<p>✓ Invalid editor data stays editable with diagnostic</p>
+<p>✓ CSV labels render as text without HTML execution</p>
+<p>✓ Oversize CSV is rejected before processing</p>
+<p>✓ Algorithm page opens with formulas</p>
+<p>✓ Submission page includes student details</p>
+<p>✓ Responsive layout has no page overflow at 390px</p>
+<p>✓ Responsive layout has no page overflow at 768px</p>
+<p>✓ Responsive layout has no page overflow at 1440px</p>
+<p>✓ Space shortcut starts playback</p>
+<p>✓ Escape shortcut stops playback</p>
+<p>✓ No browser JavaScript errors</p></body></html>
