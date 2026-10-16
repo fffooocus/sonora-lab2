@@ -40,7 +40,12 @@ if (changes) {
 }
 const current = run('gh', ['api', `repos/${repository}/pages`], { allowFailure: true });
 if (!current.ok) {
-  run('gh', ['api', '--method', 'POST', `repos/${repository}/pages`, '--input', '-'], { input: JSON.stringify({ build_type: 'legacy', source: { branch: 'gh-pages', path: '/' } }) });
+  const created = run('gh', ['api', '--method', 'POST', `repos/${repository}/pages`, '--input', '-'], { input: JSON.stringify({ build_type: 'legacy', source: { branch: 'gh-pages', path: '/' } }), allowFailure: true });
+  if (!created.ok) {
+    // The new branch may auto-enable Pages between the GET and POST.
+    const confirmed = run('gh', ['api', `repos/${repository}/pages`], { allowFailure: true });
+    if (!confirmed.ok || JSON.parse(confirmed.stdout).source?.branch !== 'gh-pages') throw new Error(created.stderr);
+  }
 } else {
   const config = JSON.parse(current.stdout);
   if (config.source?.branch !== 'gh-pages' || config.source?.path !== '/') {

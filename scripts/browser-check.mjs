@@ -22,6 +22,13 @@ try {
   check('Default indicators are temperature and precipitation', await page.locator('#pitch-column').inputValue() === 'temperature' && await page.locator('#expression-column').inputValue() === 'precipitation');
   await mkdir(new URL('../docs/screenshots/', import.meta.url), { recursive: true });
   await page.screenshot({ path: `${root}/docs/screenshots/studio-desktop.png`, fullPage: true });
+  await page.evaluate(() => {
+    document.querySelector('#play').click();
+    const tempo = document.querySelector('#tempo'); tempo.value = '120'; tempo.dispatchEvent(new Event('input'));
+  });
+  await page.waitForFunction(() => !document.querySelector('#play').disabled);
+  check('Changing settings cancels pending audio startup', await page.locator('#play').getAttribute('aria-label') === 'Відтворити' && await page.locator('#seek').inputValue() === '0');
+  await page.locator('#tempo').fill('108'); await page.locator('#tempo').dispatchEvent('input');
   await page.getByRole('button', { name: 'Відтворити', exact: true }).click();
   await page.waitForTimeout(700);
   check('Web Audio starts and timeline advances', Number(await page.locator('#seek').inputValue()) > 0);

@@ -7,13 +7,16 @@ export class Player {
   playing = false;
   volume = 0.55;
   timer = null;
+  generation = 0;
 
   async play(composition) {
     if (this.playing) return;
     const AudioContext = globalThis.AudioContext || globalThis.webkitAudioContext;
     if (!AudioContext) throw new Error('Браузер не підтримує Web Audio API. Завантажте MIDI для прослуховування.');
     this.context ??= new AudioContext();
+    const generation = this.generation;
     await this.context.resume();
+    if (generation !== this.generation) return;
     this.composition = composition;
     if (this.offset >= composition.seconds) this.offset = 0;
     this.master ??= this.context.createGain();
@@ -36,7 +39,7 @@ export class Player {
       const end = this.origin + (n.tick + n.duration) / c.ppq * beat;
       if (end <= this.context.currentTime) continue;
       const start = Math.max(this.context.currentTime + 0.005, this.origin + n.tick / c.ppq * beat);
-      if (end <= start) continue;
+      if (end <= start + 0.02) continue;
       const oscillator = this.context.createOscillator(), gain = this.context.createGain();
       const instrument = INSTRUMENTS[c.config.instrument];
       oscillator.type = instrument.wave;
@@ -55,6 +58,7 @@ export class Player {
 
   get position() { return this.playing ? Math.min(this.composition.seconds, Math.max(0, this.context.currentTime - this.origin)) : this.offset; }
   pause() {
+    this.generation++;
     if (this.playing) this.offset = this.position;
     this.playing = false;
     clearInterval(this.timer);
