@@ -42,7 +42,7 @@ function renderTable() {
     }); body.append(tr);
   });
   $('data-table').tBodies[0].replaceChildren(body);
-  $('row-count').textContent = `${dataset.rows.length} рядків · ${dataset.numeric.length} числових показники`;
+  $('row-count').textContent = `${dataset.rows.length} рядків · числових стовпців: ${dataset.numeric.length}`;
 }
 function regenerate() {
   if (!dataset) return;
@@ -145,7 +145,7 @@ async function togglePlay() {
     $('playback-status').textContent = 'Відтворення призупинено';
   } else {
     playPending = true; $('play').disabled = true;
-    try { await player.play(composition); setPlayingUI(); $('playback-status').textContent = 'Відтворення · синтез Web Audio'; animate(); }
+    try { await player.play(composition); setPlayingUI(); if (player.playing) { $('playback-status').textContent = 'Відтворення · синтез Web Audio'; animate(); } }
     catch (error) { toast(error.message); }
     finally { playPending = false; $('play').disabled = false; }
   }

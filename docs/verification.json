@@ -1,9 +1,10 @@
 {
   "environment": "Playwright Chromium (local Microsoft Edge when available)",
-  "checksPassed": 24,
+  "checksPassed": 25,
   "checks": [
     "Default dataset automatically creates 24 notes",
     "Default indicators are temperature and precipitation",
+    "Changing settings cancels pending audio startup",
     "Web Audio starts and timeline advances",
     "Pause preserves position",
     "Stop resets timeline",
